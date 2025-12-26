@@ -1,7 +1,12 @@
 import numpy as np
 import pandas as pd
 
-from plots import objective_curve_plot, dot_product_plots, run_animation
+from plots import (
+    objective_curve_plot,
+    dot_product_plots,
+    three_point_df_to_long,
+    run_animation_long_df
+)
 
 
 class PositiveSamplesOnlyModel:
@@ -186,9 +191,14 @@ if __name__ == "__main__":
 
     # Supporting plots
     objective_curve_plot(df, title="Objective over optimisation steps (pull term only)")
-    dot_product_plots(df, title="Dot products increase as optimisation pulls embeddings together")
+    dot_product_plots(df, y_cols=["x1", "x2"], title="Dot products increase as optimisation pulls embeddings together")
 
-    run_animation(df)
+    df_long_pos = three_point_df_to_long(df)
+    run_animation_long_df(
+        df_long_pos,
+        title="Positive samples only: embeddings align through co-occurrence",
+    )
+
 
 
 
