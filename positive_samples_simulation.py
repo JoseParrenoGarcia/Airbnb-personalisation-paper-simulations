@@ -185,8 +185,8 @@ if __name__ == "__main__":
     print(df.head())
 
     # Supporting plots
-    objective_curve_plot(df)
-    dot_product_plots(df)
+    objective_curve_plot(df, title="Objective over optimisation steps (pull term only)")
+    dot_product_plots(df, title="Dot products increase as optimisation pulls embeddings together")
 
     run_animation(df)
 

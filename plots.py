@@ -8,22 +8,22 @@ pio.renderers.default = "browser"
 global_height = 500
 global_width = 700
 
-def objective_curve_plot(df):
+def objective_curve_plot(df, title):
     # Objective curve (pull term only)
     fig_obj = px.line(
         df.dropna(subset=["obj"]),
         x="step",
         y="obj",
-        title="Objective over optimisation steps (pull term only)"
+        title=title,
     )
 
     fig_obj.update_layout(xaxis_title="step", yaxis_title="objective (log-sigmoid sum)", width=global_width, height=global_height)
     fig_obj.show()
 
-def dot_product_plots(df):
+def dot_product_plots(df, title):
     df_dots = df.copy()
     fig_dots = px.line(df_dots.dropna(subset=["x1", "x2"]), x="step", y=["x1", "x2"],
-                       title="Dot products increase as optimisation pulls embeddings together")
+                       title=title)
     fig_dots.update_layout(xaxis_title="step", yaxis_title="dot product", width=global_width, height=global_height)
     fig_dots.show()
 
