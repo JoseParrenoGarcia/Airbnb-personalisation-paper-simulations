@@ -1,7 +1,12 @@
 import numpy as np
 import pandas as pd
 
-from plots import objective_curve_plot, dot_product_plots, run_animation
+from plots import (
+    objective_curve_plot,
+    dot_product_plots,
+    three_point_df_to_long,
+    run_animation_long_df
+)
 
 class NegativeSamplesOnlyModel:
     """
@@ -181,6 +186,10 @@ if __name__ == "__main__":
 
     # Supporting plots
     objective_curve_plot(df, title="Objective over optimisation steps (push term only)")
-    dot_product_plots(df, title="Dot products decrease as optimisation push embeddings apart")
+    dot_product_plots(df, y_cols=["x1", "x2"], title="Dot products decrease as optimisation push embeddings apart")
 
-    run_animation(df)
+    df_long_neg = three_point_df_to_long(df)
+    run_animation_long_df(
+        df_long_neg,
+        title="Negative samples only: embeddings are pushed apart",
+    )
