@@ -1,6 +1,8 @@
 import numpy as np
 import pandas as pd
 
+from plots import booking_pull_vs_pos_neg_plot, run_animation_long_df
+
 class Equation4Model:
     """
     Equation (4) simulator: Equation (3) + ONE booking pull term.
@@ -229,3 +231,15 @@ if __name__ == "__main__":
 
     print(df_long.head())
     print(df_metrics.head())
+
+    booking_pull_vs_pos_neg_plot(
+        df_metrics,
+        title="Booking is another pull term: x_b & x_pos rise their dot products"
+    )
+
+    run_animation_long_df(
+        df_long,
+        title="Equation (4): booking adds an extra pull",
+    )
+
+
