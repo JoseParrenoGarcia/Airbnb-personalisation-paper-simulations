@@ -158,4 +158,32 @@ def run_animation_long_df(
     fig.show()
 
 
+def booking_pull_vs_pos_neg_plot(df_metrics, title):
+    """
+    Plots mean dot products for positives and negatives, plus the booking dot product x_b.
+    This is the cleanest story plot for Equation (4).
+    """
+    required = {"step", "x_pos_mean", "x_neg_mean", "x_b"}
+    missing = required - set(df_metrics.columns)
+    if missing:
+        raise ValueError(f"df_metrics missing required columns: {missing}")
+
+    df_plot = df_metrics[["step", "x_pos_mean", "x_neg_mean", "x_b"]].copy()
+
+    fig = px.line(
+        df_plot,
+        x="step",
+        y=["x_pos_mean", "x_neg_mean", "x_b"],
+        title=title,
+    )
+
+    fig.update_layout(
+        xaxis_title="step",
+        yaxis_title="dot product",
+        width=global_width,
+        height=global_height,
+        legend_title_text="series",
+    )
+
+    fig.show()
 
