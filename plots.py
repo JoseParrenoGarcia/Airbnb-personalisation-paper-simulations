@@ -187,3 +187,39 @@ def booking_pull_vs_pos_neg_plot(df_metrics, title):
 
     fig.show()
 
+
+def booking_pull_vs_global_and_market_neg_plot(df_metrics, title):
+    """
+    Equation (5) story plot.
+
+    Shows:
+      - positives pull (x_pos_mean goes up)
+      - booking pull (x_b goes up)
+      - global negatives push (x_neg_mean goes down)
+      - market negatives push (x_mn_mean goes down)
+
+    This is the cleanest single plot to explain why market-aware negatives exist.
+    """
+    required = {"step", "x_pos_mean", "x_neg_mean", "x_mn_mean", "x_b"}
+    missing = required - set(df_metrics.columns)
+    if missing:
+        raise ValueError(f"df_metrics missing required columns: {missing}")
+
+    df_plot = df_metrics[["step", "x_pos_mean", "x_neg_mean", "x_mn_mean", "x_b"]].copy()
+
+    fig = px.line(
+        df_plot,
+        x="step",
+        y=["x_pos_mean", "x_b", "x_neg_mean", "x_mn_mean"],
+        title=title,
+    )
+
+    fig.update_layout(
+        xaxis_title="step",
+        yaxis_title="dot product",
+        width=global_width,
+        height=global_height,
+        legend_title_text="series",
+    )
+
+    fig.show()
