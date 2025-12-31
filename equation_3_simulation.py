@@ -165,6 +165,55 @@ class Equation3Model:
 
         return self.traj
 
+def equation3_traj_to_long_df(traj):
+    """
+    Converts Equation3Model trajectory to a tidy (long) DataFrame.
+
+    Output columns:
+      step, group (centre/pos/neg), idx, x, y
+
+    This format is ideal for Plotly animation with frame='step'.
+    """
+    rows = []
+
+    for k in range(len(traj["step"])):
+        step = int(traj["step"][k])
+
+        # centre
+        l = traj["l"][k]
+        rows.append({"step": step, "group": "centre", "idx": 0, "x": float(l[0]), "y": float(l[1])})
+
+        # positives
+        pos = traj["pos"][k]  # (P,2)
+        for i in range(pos.shape[0]):
+            rows.append({"step": step, "group": "pos", "idx": i, "x": float(pos[i, 0]), "y": float(pos[i, 1])})
+
+        # negatives
+        neg = traj["neg"][k]  # (N,2)
+        for i in range(neg.shape[0]):
+            rows.append({"step": step, "group": "neg", "idx": i, "x": float(neg[i, 0]), "y": float(neg[i, 1])})
+
+    return pd.DataFrame(rows)
+
+def equation3_traj_to_metrics_df(traj):
+    """
+    Scalar/metric DataFrame:
+      step, obj, x_pos_mean, x_neg_mean, x_pos_min/max, x_neg_min/max
+    """
+    df = pd.DataFrame({
+        "step": traj["step"],
+        "obj": traj["obj"],
+        "x_pos_mean": [np.mean(x) for x in traj["x_pos"]],
+        "x_neg_mean": [np.mean(x) for x in traj["x_neg"]],
+        "x_pos_min": [np.min(x) for x in traj["x_pos"]],
+        "x_pos_max": [np.max(x) for x in traj["x_pos"]],
+        "x_neg_min": [np.min(x) for x in traj["x_neg"]],
+        "x_neg_max": [np.max(x) for x in traj["x_neg"]],
+    })
+    return df
+
+
+
 if __name__ == "__main__":
     pd.set_option('display.max_columns', None)  # show all columns
     pd.set_option('display.width', None)  # don't wrap columns to new lines
@@ -178,53 +227,6 @@ if __name__ == "__main__":
 
     model = Equation3Model(v_l, v_pos_list, v_neg_list, learning_rate=0.25, steps=60)
     traj = model.run_simulation()
-
-    def equation3_traj_to_long_df(traj):
-        """
-        Converts Equation3Model trajectory to a tidy (long) DataFrame.
-
-        Output columns:
-          step, group (centre/pos/neg), idx, x, y
-
-        This format is ideal for Plotly animation with frame='step'.
-        """
-        rows = []
-
-        for k in range(len(traj["step"])):
-            step = int(traj["step"][k])
-
-            # centre
-            l = traj["l"][k]
-            rows.append({"step": step, "group": "centre", "idx": 0, "x": float(l[0]), "y": float(l[1])})
-
-            # positives
-            pos = traj["pos"][k]  # (P,2)
-            for i in range(pos.shape[0]):
-                rows.append({"step": step, "group": "pos", "idx": i, "x": float(pos[i, 0]), "y": float(pos[i, 1])})
-
-            # negatives
-            neg = traj["neg"][k]  # (N,2)
-            for i in range(neg.shape[0]):
-                rows.append({"step": step, "group": "neg", "idx": i, "x": float(neg[i, 0]), "y": float(neg[i, 1])})
-
-        return pd.DataFrame(rows)
-
-    def equation3_traj_to_metrics_df(traj):
-        """
-        Scalar/metric DataFrame:
-          step, obj, x_pos_mean, x_neg_mean, x_pos_min/max, x_neg_min/max
-        """
-        df = pd.DataFrame({
-            "step": traj["step"],
-            "obj": traj["obj"],
-            "x_pos_mean": [np.mean(x) for x in traj["x_pos"]],
-            "x_neg_mean": [np.mean(x) for x in traj["x_neg"]],
-            "x_pos_min": [np.min(x) for x in traj["x_pos"]],
-            "x_pos_max": [np.max(x) for x in traj["x_pos"]],
-            "x_neg_min": [np.min(x) for x in traj["x_neg"]],
-            "x_neg_max": [np.max(x) for x in traj["x_neg"]],
-        })
-        return df
 
     df_long = equation3_traj_to_long_df(traj)
     df_metrics = equation3_traj_to_metrics_df(traj)
