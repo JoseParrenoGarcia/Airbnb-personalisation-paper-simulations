@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
 import plotly.io as pio
+from pretty_table import save_pretty_table_html
 
 pio.renderers.default = "browser"
 
@@ -46,9 +47,9 @@ la_centroid = la_clicks.mean(axis=0)
 # - LDN_3 is closer to NY
 # - LDN_4 is far / different direction
 candidates = {
-    "LDN_1": np.array([1.1, 2.05]),    # close to NY cluster
-    "LDN_2": np.array([-1.55, -0.55]), # close to LA cluster
-    "LDN_3": np.array([0.6, 1.6]),     # moderate, closer to NY
+    "LDN_1": np.array([1.4, 2.05]),    # close to NY cluster
+    "LDN_2": np.array([-1.55, -1]), # close to LA cluster
+    "LDN_3": np.array([0.1, 1.6]),     # moderate, closer to NY
     "LDN_4": np.array([2.2, -1.7]),    # far / different direction
 }
 
@@ -71,12 +72,26 @@ df = pd.DataFrame(rows)
 df["rank"] = df["EmbClickSim (max)"].rank(ascending=False, method="min").astype(int)
 df = df.sort_values(["rank", "candidate_listing"]).reset_index(drop=True)
 
-# Pretty formatting
-df_display = df.copy()
-for col in ["cos_sim_with_Hc(NY)", "cos_sim_with_Hc(LA)", "EmbClickSim (max)"]:
-    df_display[col] = df_display[col].map(lambda x: f"{x:.3f}")
+# Pretty formatting and show in browser using auxiliary function
+rename_cols = {
+    "candidate_listing": "Candidate listing",
+    "cos_sim_with_Hc(NY)": "cos(ℓᵢ, μₕc(NY))",
+    "cos_sim_with_Hc(LA)": "cos(ℓᵢ, μₕc(LA))",
+    "EmbClickSim (max)": "EmbClickSim = maxₘ cos(ℓᵢ, μₕc(m))",
+    "best_matching_market": "Best matching market",
+    "rank": "Rank",
+}
 
-print(df_display)
+path = save_pretty_table_html(
+    df=df,
+    path="embclicksim_table.html",
+    caption="EmbClickSim example (Equation 10): cosine similarity to market-level click centroids",
+    footnote="EmbClickSim is computed as the maximum cosine similarity across market-level click centroids (Equation 10).",
+    rename_cols=rename_cols,
+    emphasise_col="EmbClickSim = maxₘ cos(ℓᵢ, μₕc(m))",
+)
+
+print("Saved to:", path)
 
 
 def plot_embedding_space_plotly(
