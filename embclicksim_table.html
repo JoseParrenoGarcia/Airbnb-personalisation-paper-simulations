@@ -1,0 +1,133 @@
+
+    <html>
+      <head>
+        <meta charset="utf-8" />
+        <style>
+          body {
+            background: #ffffff;
+            margin: 24px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                         Roboto, Helvetica, Arial, sans-serif;
+            color: #1c1c1e;
+          }
+
+          .table-container {
+            max-width: 1000px;
+            margin: 24px auto;
+          }
+
+          .table-caption {
+            font-size: 20px;
+            font-weight: 650;
+            margin-bottom: 14px;
+            color: #1c1c1e;
+            text-align: center;
+          }
+
+          table.pretty-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            background: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+          }
+
+          table.pretty-table thead th {
+            background: #f5f5f7;
+            font-weight: 650;
+            padding: 14px 16px;
+            font-size: 14px;
+            border-bottom: 2px solid #d1d1d6;
+            color: #1c1c1e;
+            text-align: center;
+          }
+
+          table.pretty-table tbody td {
+            padding: 14px 16px;
+            font-size: 14px;
+            border-bottom: 1px solid #e5e5ea;
+            color: #1c1c1e;
+            text-align: center;
+          }
+
+          table.pretty-table tbody tr:last-child td {
+            border-bottom: none;
+          }
+
+          table.pretty-table tbody tr:hover {
+            background-color: #f9f9fb;
+          }
+
+          
+        table.pretty-table td:nth-child(4),
+        table.pretty-table th:nth-child(4) {
+            font-weight: 600;
+            background: #fbfbfd;
+        }
+        
+
+          .table-footnote {
+            margin-top: 10px;
+            font-size: 12px;
+            line-height: 1.4;
+            color: #6e6e73;
+            text-align: center;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="table-container">
+          <div class='table-caption'>EmbClickSim example (Equation 10): cosine similarity to market-level click centroids</div>
+          <table border="1" class="dataframe pretty-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Candidate listing</th>
+      <th>cos(ℓᵢ, μₕc(NY))</th>
+      <th>cos(ℓᵢ, μₕc(LA))</th>
+      <th>EmbClickSim = maxₘ cos(ℓᵢ, μₕc(m))</th>
+      <th>Best matching market</th>
+      <th>Rank</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>LDN_1</td>
+      <td>0.994</td>
+      <td>-0.819</td>
+      <td>0.994</td>
+      <td>NY</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>LDN_2</td>
+      <td>-0.873</td>
+      <td>0.978</td>
+      <td>0.978</td>
+      <td>LA</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td>LDN_3</td>
+      <td>0.911</td>
+      <td>-0.411</td>
+      <td>0.911</td>
+      <td>NY</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <td>LDN_4</td>
+      <td>-0.170</td>
+      <td>-0.524</td>
+      <td>-0.170</td>
+      <td>NY</td>
+      <td>4</td>
+    </tr>
+  </tbody>
+</table>
+          <div class='table-footnote'>EmbClickSim is computed as the maximum cosine similarity across market-level click centroids (Equation 10).</div>
+        </div>
+      </body>
+    </html>
+    
