@@ -83,7 +83,7 @@ Key idea:
 
 Example output:
 
-[embedded image: positive pull collapsing embeddings]
+![Positive-only optimisation: embeddings collapse](images/positive_simulation.webp)
 
 
 ---
@@ -99,8 +99,7 @@ Key idea:
 
 Example output:
 
-[embedded image: embeddings drifting apart]
-
+![Negative-only optimisation: embeddings pull apart](images/negative_simulation.webp)
 
 ---
 
@@ -116,8 +115,7 @@ Key idea:
 
 Example output:
 
-[embedded image: tug-of-war between pull and push]
-
+![Equation 3: tug-of-war between pull and push](images/equation_3_simulation.webp)
 
 ---
 
@@ -132,7 +130,7 @@ Key idea:
 
 Example output:
 
-[embedded image: booking pulling embeddings more strongly]
+![Equation 4: booking pulling embeddings more strongly](images/booking_simulation.webp)
 
 
 ---
@@ -148,8 +146,7 @@ Key idea:
 
 Example output:
 
-[embedded image: global vs market-aware negative effects]
-
+![Equation 5: global vs market-aware negative effects](images/market_aware_negative_simulation.webp)
 
 ---
 
