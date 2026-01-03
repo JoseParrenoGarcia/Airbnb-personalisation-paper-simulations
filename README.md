@@ -162,7 +162,7 @@ Key idea:
 
 Example output:
 
-[embedded image: user and listing embeddings in same space]
+![user and listing embeddings in same space](images/user_listing_embedding.webp)
 
 
 ---
